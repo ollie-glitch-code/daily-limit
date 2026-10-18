@@ -88,7 +88,7 @@ function build(){
   $("inputs").innerHTML=FIELDS.map(function(f){
     return '<div class="item"><div class="nm"><span class="tag">'+f.t+'</span>'+f.n+'</div><div></div>'+
     '<div class="ctl"><input class="main" type="number" inputmode="decimal" id="v_'+f.k+'" aria-label="'+f.n+'">'+
-    '<div class="quick"><input type="number" inputmode="decimal" id="q_'+f.k+'" placeholder="快速加總" data-k="'+f.k+'">+加入</button></div></div></div>';
+    '<div class="quick"><input type="number" inputmode="decimal" id="q_'+f.k+'" placeholder="快速加總"><button data-k="'+f.k+'">+加入</button></div></div></div>';
   }).join("");
   FIELDS.forEach(function(f){
     $("v_"+f.k).value=S[f.k]||"";
