@@ -24,7 +24,7 @@ h1{font-size:18px;text-align:center;margin:2px 0 8px}
 .ctl .main{flex:1 1 0;min-width:0}
 .ctl .quick{display:flex;gap:6px;align-items:center;flex:none}
 .ctl .quick span{font-size:11px;color:var(--mut);white-space:nowrap}
-.ctl .quick input{width:62px;flex:none;padding:8px 6px}
+.ctl .quick input{width:100px;flex:none;padding:8px 8px}
 .ctl .quick button{flex:none;padding:8px 10px;font-size:14px}
 input[type=number]{-moz-appearance:textfield;appearance:textfield}
 input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
@@ -88,7 +88,7 @@ function build(){
   $("inputs").innerHTML=FIELDS.map(function(f){
     return '<div class="item"><div class="nm"><span class="tag">'+f.t+'</span>'+f.n+'</div><div></div>'+
     '<div class="ctl"><input class="main" type="number" inputmode="decimal" id="v_'+f.k+'" aria-label="'+f.n+'">'+
-    '<div class="quick"><span>快速加總</span><input type="number" inputmode="decimal" id="q_'+f.k+'" placeholder="0"><button data-k="'+f.k+'">+加入</button></div></div></div>';
+    '<div class="quick"><input type="number" inputmode="decimal" id="q_'+f.k+'" placeholder="快速加總" data-k="'+f.k+'">+加入</button></div></div></div>';
   }).join("");
   FIELDS.forEach(function(f){
     $("v_"+f.k).value=S[f.k]||"";
