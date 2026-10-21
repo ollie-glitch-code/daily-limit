@@ -4,45 +4,298 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>每日消費上限</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
---bg:#f6f5f1;--card:#fff;--tx:#222;--mut:#777;--line:#e4e2da;--ok:#2f8f5b;--bad:#d1453b;--pri:#3b5bdb}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181b;--card:#222428;--tx:#eceae4;--mut:#9a9a94;--line:#35373c;--ok:#4cc38a;--bad:#ff6b60;--pri:#7c93ff}}
-:root[data-theme="dark"]{--bg:#17181b;--card:#222428;--tx:#eceae4;--mut:#9a9a94;--line:#35373c;--ok:#4cc38a;--bad:#ff6b60;--pri:#7c93ff}
-*{box-sizing:border-box}
-html,body{overflow-x:hidden}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.6 -apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
-main{max-width:560px;margin:0 auto;padding:8px 12px}
-h1{font-size:18px;text-align:center;margin:2px 0 8px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px}
-.item{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:center;padding:6px 0;border-top:1px solid var(--line)}
-.item:first-of-type{border-top:0}
-.tag{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--pri);color:#fff;font-size:12px;font-weight:700;align-items:center;justify-content:center;margin-right:6px}
-.nm{font-weight:600}
-.ctl{grid-column:1/-1;display:flex;gap:6px;align-items:center;flex-wrap:nowrap}
-.ctl .main{flex:1 1 0;min-width:0}
-.ctl .quick{display:flex;gap:6px;align-items:center;flex:none}
-.ctl .quick span{font-size:11px;color:var(--mut);white-space:nowrap}
-.ctl .quick input{width:100px;flex:none;padding:8px 8px}
-.ctl .quick button{flex:none;padding:8px 10px;font-size:14px}
-input[type=number]{-moz-appearance:textfield;appearance:textfield}
-input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-input,button{font:inherit;font-size:16px;color:var(--tx);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;min-width:0}
-input{text-align:right}
-button{width:auto;background:var(--pri);color:#fff;border:0;font-weight:600;cursor:pointer;white-space:nowrap}
-button.ghost{width:100%;background:transparent;color:var(--tx);border:1px solid var(--line);font-weight:400}
-.note{font-size:13px;color:var(--mut);margin:0 0 6px}
-.res{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-top:1px solid var(--line)}
-.res:first-of-type{border-top:0}
-.res b{font-size:22px}
-.res.s b{font-size:16px}
-.res.s{color:var(--mut);font-size:13px}
-.bad{color:var(--bad)}.ok{color:var(--ok)}
-.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-textarea{width:100%;min-height:70px;margin-top:8px;font:12px monospace;background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:8px}
-.hint{font-size:12px;color:var(--mut);margin-top:6px}
-h2{font-size:14px;color:var(--mut);margin:0 0 8px}
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --tx: #0f172a;
+  --mut: #64748b;
+  --line: #e2e8f0;
+  --line-subtle: #f1f5f9;
+  --focus-ring: rgba(79, 70, 229, 0.15);
+  
+  --pri: #4f46e5;
+  --pri-hover: #4338ca;
+  --pri-light: #eef2ff;
+  
+  --ok: #059669;
+  --bad: #e11d48;
+  
+  --radius-sm: 8px;
+  --radius-md: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #090a0f;
+    --card: #12141c;
+    --tx: #f1f5f9;
+    --mut: #8b9bb4;
+    --line: #202636;
+    --line-subtle: #171b26;
+    --focus-ring: rgba(99, 102, 241, 0.25);
+    --pri: #6366f1;
+    --pri-hover: #4f46e5;
+    --pri-light: #181d33;
+    --ok: #10b981;
+    --bad: #f43f5e;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #090a0f;
+  --card: #12141c;
+  --tx: #f1f5f9;
+  --mut: #8b9bb4;
+  --line: #202636;
+  --line-subtle: #171b26;
+  --focus-ring: rgba(99, 102, 241, 0.25);
+  --pri: #6366f1;
+  --pri-hover: #4f46e5;
+  --pri-light: #181d33;
+  --ok: #10b981;
+  --bad: #f43f5e;
+}
+
+* { box-sizing: border-box; }
+html, body { overflow-x: hidden; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", sans-serif;
+  font-size: 14.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 14px 36px;
+}
+
+h1 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 16px;
+  color: var(--tx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+h1::after, h1::before {
+  content: "";
+  height: 1px;
+  width: 20px;
+  background: var(--line);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 10px;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid var(--line-subtle);
+}
+.item:first-of-type { border-top: 0; padding-top: 0; }
+.item:last-of-type { padding-bottom: 0; }
+
+.tag {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--pri-light);
+  color: var(--pri);
+  border: 1px solid currentColor;
+  font-size: 11px;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+}
+
+.nm {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--tx);
+}
+
+.ctl {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.ctl .main { flex: 1 1 0; min-width: 0; }
+.ctl .quick { display: flex; gap: 6px; align-items: center; flex: none; }
+.ctl .quick input { width: 84px; }
+
+input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+input, button {
+  font-family: inherit;
+  font-size: 14.5px;
+  color: var(--tx);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+  transition: all 0.15s ease-in-out;
+}
+
+input {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  font-weight: 500;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--pri);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  background: var(--card);
+}
+
+button {
+  background: var(--pri);
+  color: #ffffff;
+  border: 1px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 7px 12px;
+}
+button:hover { background: var(--pri-hover); }
+button:active { transform: scale(0.98); }
+
+button.ghost {
+  width: 100%;
+  background: transparent;
+  color: var(--tx);
+  border: 1px solid var(--line);
+  font-weight: 500;
+}
+button.ghost:hover {
+  background: var(--line-subtle);
+}
+
+.note {
+  font-size: 12px;
+  color: var(--mut);
+  margin: 0 0 3px;
+  line-height: 1.4;
+}
+.note:last-child { margin-bottom: 0; }
+
+.res {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-top: 1px solid var(--line-subtle);
+}
+.res:first-of-type { border-top: 0; padding-top: 0; }
+
+.res span {
+  font-size: 13.5px;
+  color: var(--mut);
+  font-weight: 500;
+}
+
+.res b {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.res.sub {
+  padding-top: 7px;
+  padding-bottom: 2px;
+}
+.res.sub span {
+  font-size: 12px;
+  color: var(--mut);
+  opacity: 0.85;
+}
+.res.sub b {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--mut);
+  letter-spacing: 0;
+}
+
+.bad { color: var(--bad) !important; }
+.ok { color: var(--ok) !important; }
+
+h2 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mut);
+  letter-spacing: 0.04em;
+  margin: 0 0 8px;
+}
+
+.row3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.row3 button { font-size: 12.5px; padding: 6px 4px; }
+
+textarea {
+  width: 100%;
+  min-height: 60px;
+  margin-top: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  background: var(--bg);
+  color: var(--tx);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+  resize: vertical;
+}
+textarea:focus {
+  outline: none;
+  border-color: var(--pri);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--mut);
+  margin-top: 6px;
+  line-height: 1.4;
+}
 </style>
 </head>
 <body>
@@ -60,69 +313,111 @@ h2{font-size:14px;color:var(--mut);margin:0 0 8px}
 <div class="card">
   <div class="res"><span>今日消費上限</span><b id="rDaily">0</b></div>
   <div class="res"><span>剩餘預算</span><b id="rLeft">0</b></div>
-  <div class="res s"><span>若不隨消費調整，固定每日上限僅供對照</span><b id="rFixed">0</b></div>
+  <div class="res sub"><span>固定每日上限（僅供對照）</span><b id="rFixed">0</b></div>
 </div>
 
 <div class="card">
   <h2>備份／還原</h2>
   <div class="row3">
-    <button class="ghost" id="exBtn">產生備份文字</button>
-    <button class="ghost" id="imBtn">從文字還原</button>
+    <button class="ghost" id="exBtn">複製備份</button>
+    <button class="ghost" id="imBtn">文字還原</button>
     <button class="ghost" id="clrBtn">清空全部</button>
   </div>
-  <textarea id="bk" placeholder="備份文字會顯示在這裡；還原時把備份文字貼進來再按「從文字還原」"></textarea>
-  <div class="hint">資料只存在這個瀏覽器裡，換裝置或清除瀏覽器資料前請先備份。</div>
+  <textarea id="bk" placeholder="備份文字會顯示在這裡；還原時把備份文字貼進來再按「文字還原」"></textarea>
+  <div class="hint">資料僅保存在此瀏覽器本機儲存空間，若更換裝置或清除瀏覽器資料前請記得備份。</div>
 </div>
 </main>
 
 <script>
 (function(){
-var KEY="daily-limit-blank-v1";
+// 改用 v2 鍵名，避免讀取到先前的舊快取數值
+var KEY="daily-limit-blank-v2";
 var FIELDS=[{k:"a",t:"A",n:"本月預算"},{k:"b",t:"B",n:"本月累計已消費"},{k:"c",t:"C",n:"本月墊錢費用"}];
-var S={a:0,b:0,c:0};
+var S={a:"",b:"",c:""};
+
 function $(i){return document.getElementById(i)}
-function load(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);FIELDS.forEach(function(f){S[f.k]=Number(o[f.k])||0})}}catch(e){}}
+
+function load(){
+  try{
+    var r=localStorage.getItem(KEY);
+    if(r){
+      var o=JSON.parse(r);
+      FIELDS.forEach(function(f){
+        S[f.k]=(o[f.k]!==undefined && o[f.k]!=="") ? o[f.k] : "";
+      });
+    }
+  }catch(e){}
+}
+
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-function fmt(n){return Math.round(n).toLocaleString("zh-TW")}
+
+function fmt(n){
+  if(isNaN(n)) return "0";
+  return Math.round(n).toLocaleString("zh-TW");
+}
+
 function build(){
   $("inputs").innerHTML=FIELDS.map(function(f){
     return '<div class="item"><div class="nm"><span class="tag">'+f.t+'</span>'+f.n+'</div><div></div>'+
-    '<div class="ctl"><input class="main" type="number" inputmode="decimal" id="v_'+f.k+'" aria-label="'+f.n+'">'+
+    '<div class="ctl"><input class="main" type="number" inputmode="decimal" id="v_'+f.k+'" placeholder="" aria-label="'+f.n+'">'+
     '<div class="quick"><input type="number" inputmode="decimal" id="q_'+f.k+'" placeholder="0"><button data-k="'+f.k+'">新增</button></div></div></div>';
   }).join("");
+
   FIELDS.forEach(function(f){
-    $("v_"+f.k).value=S[f.k]||"";
-    $("v_"+f.k).oninput=function(){S[f.k]=Number(this.value)||0;save();calc()};
+    $("v_"+f.k).value=(S[f.k]!==undefined && S[f.k]!=="") ? S[f.k] : "";
+    $("v_"+f.k).oninput=function(){
+      S[f.k]=this.value.trim()==="" ? "" : Number(this.value);
+      save();calc();
+    };
   });
+
   $("inputs").onclick=function(ev){
     var k=ev.target.getAttribute&&ev.target.getAttribute("data-k");
     if(!k)return;
     var q=Number($("q_"+k).value)||0;
     if(!q)return;
-    S[k]=(Number(S[k])||0)+q;$("v_"+k).value=S[k];$("q_"+k).value="";save();calc();
+    var cur = (S[k]==="" || S[k]===undefined) ? 0 : Number(S[k]);
+    S[k]=cur+q;
+    $("v_"+k).value=S[k];
+    $("q_"+k).value="";
+    save();calc();
   };
 }
+
 function calc(){
   var d=new Date(),y=d.getFullYear(),m=d.getMonth(),day=d.getDate();
   var total=new Date(y,m+1,0).getDate(),left=total-day+1;
-  $("dateLine").textContent="今天是 "+(m+1)+"月"+day+"日｜本月共 "+total+" 天，剩餘 "+left+" 天（含今天）。";
-  var rest=S.a-S.b+S.c,daily=rest/left;
+  $("dateLine").textContent="今天是 "+(m+1)+"月"+day+"日 ｜ 本月共 "+total+" 天，剩餘 "+left+" 天（含今天）";
+  
+  var valA = S.a==="" ? 0 : Number(S.a);
+  var valB = S.b==="" ? 0 : Number(S.b);
+  var valC = S.c==="" ? 0 : Number(S.c);
+  
+  var rest=valA-valB+valC, daily=rest/left;
   var el=$("rDaily");el.textContent=fmt(daily);el.className=daily<0?"bad":"";
   var rl=$("rLeft");rl.textContent=fmt(rest);rl.className=rest<0?"bad":"";
-  $("rFixed").textContent=fmt(S.a/total);
+  $("rFixed").textContent=fmt(valA/total);
 }
+
 function init(){
   $("nojs").style.display="none";
   load();build();calc();
   $("exBtn").onclick=function(){$("bk").value=JSON.stringify(S);$("bk").select();try{document.execCommand("copy")}catch(e){}};
   $("imBtn").onclick=function(){
     try{var o=JSON.parse($("bk").value);if(!o||typeof o!=="object")throw 0;
-      FIELDS.forEach(function(f){S[f.k]=Number(o[f.k])||0;$("v_"+f.k).value=S[f.k]||""});
+      FIELDS.forEach(function(f){
+        S[f.k]=(o[f.k]!==undefined && o[f.k]!=="") ? Number(o[f.k]) : "";
+        $("v_"+f.k).value=S[f.k];
+      });
       save();calc();$("bk").value="";
     }catch(e){alert("備份文字格式不正確")}
   };
   $("clrBtn").onclick=function(){
-    if(confirm("確定清空所有數字？此動作無法復原")){S={a:0,b:0,c:0};FIELDS.forEach(function(f){$("v_"+f.k).value=""});save();calc()}
+    if(confirm("確定清空所有數字？此動作無法復原")){
+      S={a:"",b:"",c:""};
+      FIELDS.forEach(function(f){$("v_"+f.k).value=""});
+      save();calc();
+    }
   };
 }
 init();
