@@ -53,12 +53,12 @@ h2{font-size:14px;color:var(--mut);margin:0 0 8px}
 <div class="card" id="inputs"></div>
 
 <div class="card">
-  <p class="note">公式說明：動態每日上限 =（A − B + C）÷ 剩餘天數（含今天）。</p>
+  <p class="note">動態每日上限 =（A − B + C）÷ 剩餘天數（含今天）。</p>
   <p class="note" id="dateLine"></p>
 </div>
 
 <div class="card">
-  <div class="res"><span>今日建議消費上限</span><b id="rDaily">0</b></div>
+  <div class="res"><span>今日消費上限</span><b id="rDaily">0</b></div>
   <div class="res"><span>剩餘預算</span><b id="rLeft">0</b></div>
   <div class="res s"><span>若不隨消費調整，固定每日上限僅供對照</span><b id="rFixed">0</b></div>
 </div>
@@ -88,7 +88,7 @@ function build(){
   $("inputs").innerHTML=FIELDS.map(function(f){
     return '<div class="item"><div class="nm"><span class="tag">'+f.t+'</span>'+f.n+'</div><div></div>'+
     '<div class="ctl"><input class="main" type="number" inputmode="decimal" id="v_'+f.k+'" aria-label="'+f.n+'">'+
-    '<div class="quick"><input type="number" inputmode="decimal" id="q_'+f.k+'" placeholder="快速加總"><button data-k="'+f.k+'">+加入</button></div></div></div>';
+    '<div class="quick"><input type="number" inputmode="decimal" id="q_'+f.k+'" placeholder="0"><button data-k="'+f.k+'">新增</button></div></div></div>';
   }).join("");
   FIELDS.forEach(function(f){
     $("v_"+f.k).value=S[f.k]||"";
